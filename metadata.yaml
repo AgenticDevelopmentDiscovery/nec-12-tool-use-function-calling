@@ -1,0 +1,46 @@
+# Shared project metadata. Every output reads this file (`--metadata-file`), so
+# it is the one place the title and authors are written down.
+#
+# Settings that mean the same thing everywhere go at the top. Settings only one
+# output understands are grouped below and labelled — a beamer theme is inert in
+# the document PDF and on the website, and that is fine, but it should be
+# obvious which is which. Anything that must DIFFER between outputs — page
+# geometry, document class — belongs in the `justfile` instead, not here.
+#
+# EDIT ALL OF THIS. Every value below is a placeholder.
+
+title: "Your Project Title"
+subtitle: "A one-line statement of what it is"
+author:
+  - Team Member One
+  - Team Member Two
+date: \today
+
+# Where `--citeproc` puts the reference list. Without this the bibliography is
+# appended to the last section with no heading — and, in the slides, becomes an
+# untitled final slide.
+reference-section-title: References
+
+# --- Read by the reviewer panel, not by pandoc -------------------------------
+#
+# `audience` is the standard the pedagogy reviewer judges against. It is the
+# highest-leverage field in this file: a vague audience produces vague review,
+# because the reviewer has nothing to hold the document to.
+#
+# Be specific. "Second-year undergraduates who have had one statistics course
+# but have never written code" is useful. "Technical readers" is not.
+
+audience: >-
+  Describe your intended reader in one or two sentences: their background, what
+  they already know, and what they should be able to do after reading.
+
+# --- Presentation only -------------------------------------------------------
+# Any beamer theme in TeX Live. Metropolis is clean and projects well.
+theme: metropolis
+aspectratio: 169
+
+# --- PDF outputs only --------------------------------------------------------
+# Link colouring. The website takes its link colours from `site/style.css`.
+colorlinks: true
+linkcolor: NavyBlue
+urlcolor: NavyBlue

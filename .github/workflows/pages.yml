@@ -1,0 +1,73 @@
+name: Deploy course site
+
+# Deploys all three outputs to GitHub Pages: the website, the document PDF, and
+# the presentation PDF.
+#
+# How each output is built is defined once, in the `justfile`. This workflow
+# installs the toolchain and runs `just build` — so what CI publishes is what
+# `just serve` shows you locally, and there is no second copy of the pandoc
+# invocations to drift out of step.
+#
+# Nothing generated is stored in git. The source of truth is the Markdown in
+# `sections/`; everything in the deployed site is made here, from scratch.
+#
+# Manual only — this deploys when you ask it to, never automatically on a push.
+# Trigger it with:  just deploy   (or `gh workflow run pages.yml`).
+#
+# One-time setup per repository:
+#   Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+on:
+  workflow_dispatch:
+
+# Least-privilege token: read the repo, publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer run cancels an in-flight one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+
+      # pandoc renders every output; xelatex makes the two PDFs;
+      # librsvg2-bin lets pandoc place SVG figures into them;
+      # just runs the same recipes you run locally.
+      - name: Install the toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            just \
+            pandoc \
+            texlive-xetex \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            librsvg2-bin
+
+      # Builds output/document.pdf, output/slides.pdf and _site/ — including
+      # copying both PDFs into _site/, which is what the site's header links to.
+      - name: Build all three outputs
+        run: just build
+
+      - name: Upload the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,145 @@
+/* nel-course site. One hand-written stylesheet, no framework, no build step.
+   Edit freely — this file is yours. */
+
+:root {
+  --ink: #1a1a2e;
+  --muted: #5b6472;
+  --accent: #2f5d8a;
+  --accent-soft: #e8f0f8;
+  --line: #dfe3e8;
+  --bg: #ffffff;
+  --card: #f7f9fb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8eaee;
+    --muted: #9aa4b2;
+    --accent: #7fb3e0;
+    --accent-soft: #1c2a3a;
+    --line: #2a303a;
+    --bg: #14171c;
+    --card: #1a1e25;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+a { color: var(--accent); }
+
+/* ---- top nav ---- */
+.nav {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  padding: .8rem 1.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.nav .brand {
+  font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em;
+  color: var(--ink); text-decoration: none;
+}
+.nav .links { display: flex; gap: .3rem; }
+.nav .links a {
+  padding: .35rem .8rem; border-radius: 999px; text-decoration: none;
+  color: var(--muted); font-size: .9rem; font-weight: 550;
+}
+.nav .links a:hover { background: var(--card); color: var(--ink); }
+
+/* ---- layout ---- */
+.layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 2.5rem;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+main { min-width: 0; }
+
+/* ---- sidebar table of contents ---- */
+.toc {
+  position: sticky; top: 4.5rem;
+  align-self: start;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  font-size: .89rem;
+}
+.toc-title {
+  text-transform: uppercase; letter-spacing: .08em;
+  font-size: .72rem; font-weight: 700; color: var(--accent);
+  margin: 0 0 .6rem;
+}
+.toc ul { list-style: none; margin: 0; padding: 0 0 0 .1rem; }
+.toc ul ul { padding-left: .85rem; }
+.toc li { margin: .18rem 0; }
+.toc a {
+  color: var(--muted); text-decoration: none;
+  display: block; padding: .15rem .4rem; border-radius: 5px;
+  border-left: 2px solid transparent;
+}
+.toc a:hover { color: var(--ink); background: var(--card); border-left-color: var(--accent); }
+
+/* ---- title block ---- */
+.titleblock { border-bottom: 1px solid var(--line); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+.titleblock h1 { font-size: 2.1rem; margin: 0 0 .3rem; letter-spacing: -0.02em; }
+.titleblock .subtitle { font-size: 1.08rem; color: var(--muted); margin: 0 0 .8rem; }
+.titleblock .authors { font-size: .93rem; color: var(--muted); margin: 0; }
+
+/* ---- prose ---- */
+main h1 {
+  font-size: 1.6rem; margin: 3rem 0 .8rem;
+  padding-top: .6rem; border-top: 1px solid var(--line);
+  letter-spacing: -0.01em;
+}
+main h2 { font-size: 1.18rem; margin: 2rem 0 .5rem; }
+main h3 { font-size: 1.02rem; margin: 1.5rem 0 .4rem; }
+main p { margin: 0 0 1rem; }
+main blockquote {
+  margin: 1.2rem 0; padding: .7rem 1.1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--card); color: var(--muted);
+  border-radius: 0 6px 6px 0;
+}
+main code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: .89em; background: var(--card);
+  padding: .12em .38em; border-radius: 4px;
+}
+main pre {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 8px; padding: .9rem 1.1rem; overflow-x: auto;
+}
+main pre code { background: none; padding: 0; }
+
+figure { margin: 1.8rem 0; text-align: center; }
+figure img { max-width: 100%; height: auto; }
+figcaption { font-size: .88rem; color: var(--muted); margin-top: .6rem; text-align: left; }
+
+/* Wide content scrolls inside itself; the page never scrolls sideways. */
+.table-wrap, main table { display: block; max-width: 100%; overflow-x: auto; }
+main table { border-collapse: collapse; font-size: .93rem; margin: 1.5rem 0; }
+main th, main td { border: 1px solid var(--line); padding: .45rem .7rem; text-align: left; }
+main th { background: var(--card); font-weight: 650; }
+
+/* ---- references ---- */
+#refs { margin-top: 2.5rem; font-size: .93rem; }
+#refs div { margin-bottom: .7rem; padding-left: 1.6rem; text-indent: -1.6rem; }
+
+/* ---- narrow screens: TOC collapses above the content ---- */
+@media (max-width: 800px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .toc {
+    position: static; max-height: none;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 8px; padding: .9rem 1.1rem;
+  }
+}

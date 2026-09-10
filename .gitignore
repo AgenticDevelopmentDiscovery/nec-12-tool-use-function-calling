@@ -1,0 +1,28 @@
+# Build outputs. Everything here is regenerated from sections/ by pandoc;
+# none of it belongs in git.
+output/
+_site/
+
+# LaTeX intermediates, if you ever run an engine by hand.
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+
+# Editor and OS noise.
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local Claude Code settings. `.claude/skills/` IS tracked — the /round verb is
+# part of the template and every team member needs it.
+.claude/settings.local.json

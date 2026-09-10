@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="$if(lang)$$lang$$else$en$endif$">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$if(title)$$title$$else$Untitled$endif$</title>
+$for(css)$
+  <link rel="stylesheet" href="$css$">
+$endfor$
+$if(math)$
+  $math$
+$endif$
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="#top">$if(title)$$title$$endif$</a>
+  <nav class="links">
+    <a href="document.pdf">Document&nbsp;(PDF)</a>
+    <a href="slides.pdf">Slides&nbsp;(PDF)</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+$if(toc)$
+  <aside class="toc" aria-label="Table of contents">
+    <p class="toc-title">Contents</p>
+    $table-of-contents$
+  </aside>
+$endif$
+
+  <main id="top">
+    <div class="titleblock">
+      <h1>$if(title)$$title$$endif$</h1>
+$if(subtitle)$
+      <p class="subtitle">$subtitle$</p>
+$endif$
+$if(author)$
+      <p class="authors">$for(author)$$author$$sep$ · $endfor$</p>
+$endif$
+    </div>
+
+$body$
+  </main>
+</div>
+
+</body>
+</html>
