@@ -114,38 +114,3 @@ def get_recent_transactions(account_id: str, limit: int = 5) -> dict:
         "currency": "USD",
         "transactions": BANK_DATABASE[account_id]["recent_transactions"][:limit],
     }
-
-
-'''
-Native tools exposed by bundled Codex 0.162.1 with gpt-6-luna (code mode).
-Availability varies by model, configuration, and enabled features.
-
-Directly exposed tools:
-- functions.exec: Run JavaScript that calls native tools and displays results.
-- functions.wait: Wait for a running functions.exec cell to produce output.
-- functions.request_user_input: Ask structured questions and wait for answers
-  when the current collaboration mode permits it.
-- functions.request_user_input_async: Ask questions while continuing work.
-- clock.sleep: Pause until a timeout or new user input arrives.
-- collaboration.spawn_agent: Start a sub-agent with an assigned task.
-- collaboration.send_message: Send a message to an existing sub-agent.
-- collaboration.followup_task: Assign follow-up work to an existing sub-agent.
-- collaboration.interrupt_agent: Interrupt a sub-agent's current work.
-- collaboration.list_agents: Inspect the agents in the current team.
-- collaboration.wait_agent: Wait for an agent update or new user input.
-
-Native operations called inside functions.exec through the tools object:
-- exec_command: Execute shell commands and return output or a running session.
-- write_stdin: Send input to, or collect output from, a running shell session.
-- apply_patch: Create, edit, move, or delete files using patch instructions.
-- view_image: Inspect an image stored on the local filesystem.
-- create_goal: Create a persistent work goal when explicitly requested.
-- get_goal: Read the current goal's status and budget usage.
-- update_goal: Update the current goal's completion, pause, or blocked status.
-- list_mcp_resources: Discover resources exposed by connected MCP servers.
-- list_mcp_resource_templates: Discover parameterized MCP resource templates.
-- read_mcp_resource: Read a resource from a connected MCP server.
-- clock__curr_time: Read the current UTC time.
-
-'''
-
