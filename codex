@@ -31,4 +31,15 @@ chmod 700 "$CODEX_HOME"
 if [[ ! -f "$CODEX_HOME/config.toml" ]]; then
     cp "$project_root/config/codex.toml" "$CODEX_HOME/config.toml"
 fi
-exec "$binary" "$@"
+# Resolve the Python server from this checkout, even when the repo is moved.
+# Escape the path for the TOML string accepted by Codex's -c option.
+bank_server="$project_root/src/mcp_server.py"
+bank_server="${bank_server//\\/\\\\}"
+bank_server="${bank_server//\"/\\\"}"
+if [[ "${1:-}" == "--trace-model" ]]; then
+    shift
+fi
+exec python3 "$project_root/src/model_trace.py" "$binary" \
+    -c 'mcp_servers.bank.command="python3"' \
+    -c "mcp_servers.bank.args=[\"$bank_server\"]" \
+    "$@"
