@@ -1,28 +1,23 @@
-# Build outputs. Everything here is regenerated from sections/ by pandoc;
-# none of it belongs in git.
-output/
-_site/
+# Private Codex state: credentials, sessions, logs, and caches.
+/.codex-home/
+/.codex/
+/.aws/
 
-# LaTeX intermediates, if you ever run an engine by hand.
-*.aux
+# Local secrets and captured tutorial runs.
+.env
+.env.*
+!.env.example
+auth.json
+/outputs/
+/logs/
 *.log
-*.out
-*.toc
-*.nav
-*.snm
-*.vrb
-*.bbl
-*.blg
-*.fls
-*.fdb_latexmk
 
-# Editor and OS noise.
-.DS_Store
-*.swp
-*.swo
-.idea/
-.vscode/
+# Python environments and caches.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
 
-# Local Claude Code settings. `.claude/skills/` IS tracked — the /round verb is
-# part of the template and every team member needs it.
-.claude/settings.local.json
+# Local package installations.
+node_modules/

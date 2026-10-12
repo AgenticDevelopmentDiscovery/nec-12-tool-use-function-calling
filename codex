@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Use this project's installation and private state, regardless of shell settings.
+set -euo pipefail
+project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "$(uname -s)" != Linux || "$(uname -m)" != x86_64 ]]; then
+    printf 'This bundled Codex build requires Linux x86_64.\n' >&2
+    exit 1
+fi
+binary="$project_root/vendor/codex/linux-x86_64/bin/codex"
+if [[ ! -f "$binary" ]]; then
+    printf 'The bundled Codex executable is missing from vendor/codex/linux-x86_64/bin/.\n' >&2
+    exit 1
+fi
+if head -c 7 "$binary" | LC_ALL=C grep -q '^version'; then
+    printf 'The binaries are Git LFS pointers. Run git lfs pull in this repository.\n' >&2
+    exit 1
+fi
+if [[ ! -x "$binary" ]]; then
+    printf 'The bundled Codex file is not executable. Restore its executable permission.\n' >&2
+    exit 1
+fi
+export CODEX_HOME="$project_root/.codex-home"
+export TMPDIR="$CODEX_HOME/tmp"
+export XDG_CACHE_HOME="$CODEX_HOME/cache"
+export XDG_CONFIG_HOME="$CODEX_HOME/xdg-config"
+export XDG_DATA_HOME="$CODEX_HOME/xdg-data"
+export XDG_STATE_HOME="$CODEX_HOME/xdg-state"
+umask 077
+mkdir -p "$TMPDIR"
+chmod 700 "$CODEX_HOME"
+if [[ ! -f "$CODEX_HOME/config.toml" ]]; then
+    cp "$project_root/config/codex.toml" "$CODEX_HOME/config.toml"
+fi
+exec "$binary" "$@"

@@ -1,0 +1,7 @@
+# Store the bundled executables and libraries in Git LFS.
+vendor/codex/linux-x86_64/bin/** filter=lfs diff=lfs merge=lfs -text
+vendor/codex/linux-x86_64/codex-path/** filter=lfs diff=lfs merge=lfs -text
+vendor/codex/linux-x86_64/codex-resources/bwrap filter=lfs diff=lfs merge=lfs -text
+vendor/codex/linux-x86_64/codex-resources/zsh/bin/** filter=lfs diff=lfs merge=lfs -text
+vendor/codex/linux-x86_64/codex-resources/voice/bin/** filter=lfs diff=lfs merge=lfs -text
+vendor/codex/linux-x86_64/codex-resources/voice/lib/** filter=lfs diff=lfs merge=lfs -text

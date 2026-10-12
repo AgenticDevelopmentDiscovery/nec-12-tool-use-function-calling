@@ -1,0 +1,6 @@
+# Copied into the ignored .codex-home/config.toml on first run.
+# Keep login credentials in this project's private state directory.
+cli_auth_credentials_store = "file"
+
+[history]
+persistence = "none"
